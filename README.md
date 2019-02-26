@@ -1,2 +1,2 @@
-# dev
-it is dev git
+# server
+it is server git
