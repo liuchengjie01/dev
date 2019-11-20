@@ -3,7 +3,6 @@ package creater
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
@@ -41,7 +40,7 @@ func Create(c *gin.Context)  {
 		return
 	}
 	founderid := uint64(tmp_founder_id)
-	testcode,err := redis.Strings(m["testcode"], nil)
+	//testcode,err := redis.Strings(m["testcode"], nil)
 	if err != nil {
 		log.Errorf("error is %v", err)
 		c.JSON(http.StatusBadGateway, gin.H{
@@ -57,7 +56,7 @@ func Create(c *gin.Context)  {
 		return
 	}
 	testcontents := uint32(tmp_contents)
-	testlocation, err := redis.Strings(m["testlocation"],nil)
+	//testlocation, err := redis.Strings(m["testlocation"],nil)
 	if err != nil {
 		log.Errorf("error is %v", err)
 		c.JSON(http.StatusBadGateway, gin.H{
