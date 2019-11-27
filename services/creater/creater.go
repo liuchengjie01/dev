@@ -24,6 +24,7 @@ func Create(c *gin.Context)  {
 	}
 	if len(m) == 0 {
 		c.JSON(http.StatusBadRequest, map[string]string{"message" : "request is not json"})
+		return
 	}
 	//以下取字段需要进行判空处理，目前暂时先不管
 	id, err := strconv.ParseInt(m["id"].(string), 10, 64)

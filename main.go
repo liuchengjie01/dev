@@ -3,13 +3,16 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"net/http"
 	"server/services/creater"
 	"server/services/login"
 	"server/services/participate"
 )
 func main()  {
 	router := gin.Default()
-	router.GET("/",)
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, "Successfully Run   --own by liuchengjie")
+	})
 	router.GET("/login", login.Login)
 
 	stu := router.Group("/student")
