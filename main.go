@@ -9,6 +9,7 @@ import (
 )
 func main()  {
 	router := gin.Default()
+	router.GET("/",)
 	router.GET("/login", login.Login)
 
 	stu := router.Group("/student")

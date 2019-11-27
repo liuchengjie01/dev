@@ -48,14 +48,14 @@ func Create(c *gin.Context)  {
 		})
 		return
 	}
-	testtime := m["testtime"].(time.Time)
+	testtime := m["testtime"].([]time.Time)
 	testname := m["testname"].(string)
-	tmp_contents, err := strconv.ParseInt(m["testcontents"].(string), 10, 32)
+	tmpContents, err := strconv.ParseInt(m["testcontents"].(string), 10, 32)
 	if err != nil{
 		log.Errorf("error is %v", err)
 		return
 	}
-	testcontents := uint32(tmp_contents)
+	testcontents := uint32(tmpContents)
 	//testlocation, err := redis.Strings(m["testlocation"],nil)
 	if err != nil {
 		log.Errorf("error is %v", err)
@@ -64,6 +64,9 @@ func Create(c *gin.Context)  {
 		})
 		return
 	}
+	var testcode []string
+	testcode = m["testcode"].([]string)
+	testlocation := m["testlocation"].([]string)
 	exam := database.Exam{
 		Id           : id,
 		FounderId    : founderid,
