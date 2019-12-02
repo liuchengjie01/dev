@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func SearchTest(c *gin.Context)  {
+func Participate(c *gin.Context)  {
 	log := logrus.New()
 	testcode := c.Param("test_code")
 	testcodeInt64, err := strconv.ParseInt(testcode, 10, 64)
@@ -25,6 +25,3 @@ func SearchTest(c *gin.Context)  {
 	c.HTML(http.StatusOK, "test", test)
 }
 
-func Participate(c *gin.Context)  {
-	
-}

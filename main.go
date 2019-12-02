@@ -4,16 +4,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"server/database"
 	"server/services/creater"
-	"server/services/login"
 	"server/services/participate"
+	"server/services/user"
 )
 func main()  {
+	var err error
+	err = nil
+	err = database.InitMySQL()
+	if err != nil {
+		logrus.WithError(err).Errorf("err is %v", err)
+	}
 	router := gin.Default()
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Successfully Run   --own by liuchengjie")
 	})
-	router.GET("/login", login.Login)
+	passport := router.Group("/user")
+	passport.POST("/login", user.Login)
+	passport.POST("/register", user.Register)
 
 	stu := router.Group("/student")
 	stu.POST("/participate/:test_node", participate.Participate)
@@ -23,6 +32,6 @@ func main()  {
 	tea.DELETE("/delete", creater.Delete)
 	err := router.Run(":8729")
 	if err != nil {
-		logrus.WithError(err).Error(err)
+		logrus.WithError(err).Errorf("err is %v", err)
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+//network data transmit
 type Exam struct {
 	Id int64 `gorm:"size:10;primary_key;AUTO_INCREMENT;not null" json:"id"`//考试ID
 	FounderId uint64 `json:"founder_id"`//创建者Id
@@ -14,8 +15,10 @@ type Exam struct {
 	TestContents uint32 `json:"test_contents"`	//考试内容
 	TestLocation []string `json:"test_location"`	//考试地点
 	TestTeacher []string `json:"test_teacher"`	//复试老师
+	TestAllPeople uint32 `json:"test_all_people"` //考试容纳人数
 }
 
+//maybe db data
 type Test struct {
 	FounderId uint64//考试ID
 	TestTime time.Time//考试时间
@@ -25,8 +28,10 @@ type Test struct {
 	TestLocation string//考试地点
 	TestTeacher []string//复试老师
 }
-type Creator struct {
-	FounderId uint64 `gorm:"size"`
+type User struct {
+	ID       uint64 `gorm:"column:ID;primary_key;AUTO_INCREMENT;not null"`
+	Username string `gorm:"column:username;not null"`
+	Pwd      string `gorm:"column:pwd;not null"`
 }
 
 var (
@@ -41,6 +46,7 @@ func InitMySQL() error {
 	}
 	return nil
 }
+
 //通过考试码查找考试信息
 func QueryExam(TestCode int64)(*Exam, error){
 	var exam *Exam

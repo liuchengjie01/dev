@@ -15,6 +15,7 @@ import (
 func Create(c *gin.Context)  {
 	log := logrus.New()
 	m := make(map[string]interface{})
+	//read web
 	req, _ := ioutil.ReadAll(c.Request.Body)
 	err := json.Unmarshal(req, &m)
 	if err != nil {
@@ -32,7 +33,7 @@ func Create(c *gin.Context)  {
 		log.Errorf("error is %v", err)
 		return
 	}
-	tmp_founder_id, err:= strconv.ParseInt(m["founderid"].(string), 10, 64)
+	tmpFounderId, err:= strconv.ParseInt(m["founderid"].(string), 10, 64)
 	if err != nil{
 		log.Errorf("error is %v", err)
 		c.JSON(http.StatusBadGateway,gin.H{
@@ -40,7 +41,7 @@ func Create(c *gin.Context)  {
 		})
 		return
 	}
-	founderid := uint64(tmp_founder_id)
+	founderid := uint64(tmpFounderId)
 	//testcode,err := redis.Strings(m["testcode"], nil)
 	if err != nil {
 		log.Errorf("error is %v", err)
@@ -68,6 +69,15 @@ func Create(c *gin.Context)  {
 	var testcode []string
 	testcode = m["testcode"].([]string)
 	testlocation := m["testlocation"].([]string)
+
+	var testAllPeople string
+
+	testAllPeople = m["testallpeople"].(string)
+	testallpeople, err := strconv.ParseInt(testAllPeople, 10, 64)
+	if err != nil {
+		log.Errorf("error is %v", err)
+		return
+	}
 	exam := database.Exam{
 		Id           : id,
 		FounderId    : founderid,
@@ -76,6 +86,7 @@ func Create(c *gin.Context)  {
 		TestName     : testname,
 		TestContents : testcontents,
 		TestLocation : testlocation,
+		TestAllPeople: uint32(testallpeople),
 	}
 	err = database.InsertExam(&exam)
 	if err != nil{
